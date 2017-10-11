@@ -1,6 +1,6 @@
 # GEOG5995_ASSIGNMENT
 
-##Requirements of the assignment, code must:
+Requirements of the assignment, code must:
 
 1.  Read in a file
 2.  Do something with it
