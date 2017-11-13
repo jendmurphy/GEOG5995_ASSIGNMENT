@@ -29,9 +29,12 @@ LBWgmdata = gmdata.loc[gmdata['ID']=='LH10013']  # low birth weight incidence
 IMDgmdata = gmdata.loc[gmdata['ID']=='LH10010']  # IMD by ward
 CHPVgmdata = gmdata.loc[gmdata['ID']=='LH10014'] # Child poverty by ward
 
-
-
+# PLots the % of LBW by ward.  Looks a mess.
 bar = LBWgmdata['Value'].plot(kind='bar')
+
+xls=pd.ExcelFile("/Users/JenMurphy/Documents/UNIVERSITY/PHE Data/Ward_2017.xlsx")
+data2 = xls.parse('Ward',index_col=None, na_values = ['NA'])
+
 
 
 

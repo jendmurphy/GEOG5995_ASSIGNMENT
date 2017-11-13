@@ -20,94 +20,48 @@ gm = ['Bolton','Bury','Manchester','Oldham','Rochdale','Salford',
           'Stockport','Tameside','Trafford','Wigan']
 
 #  Read csv file into a panda dataframe
-data = pd.io.parsers.read_csv("Pregnancyandbirth.data.csv")
-
-#  Select one column into a variable for testing purposes
-X = data[["Indicator.ID"]]
-print (X)
-
-#  Print a list of column headers
-print(data.columns.tolist())
+childhealthprofiledata = pd.io.parsers.read_csv("/Users/JenMurphy/Documents/UNIVERSITY/PHE Data/Child health profile/Pregnancyandbirth.data.csv")
 
 #  Select maternal smoker status variable into a a dataframe
-smoker = df.loc[data['Indicator ID']== 20301]
-print(smoker)                   # eyeball check of data
-print(smoker.columns.tolist())  # eyeball check of column headers
+smoker = childhealthprofiledata.loc[data['Indicator ID']== 20301]
 
-#  Set index column to local authority names (strings)
-smoker = smoker.set_index(['Area Name'])
+#  Select smoker data for only those boroughs within GM, referencing the list of GM boroughs.
+gmsmoker = smoker.loc[smoker['Area Name'].isin(gm)]
 
-#  Select only local authorities within list(gm)
-smokergm = smoker.loc[(gm)]
-#smokergm.reset_index()
+#  Remove unnecessary columns
+gmsmoker.drop(['Indicator Name','Area Code','Value note','Recent Trend','Lower CI 99.8 limit','Upper CI 99.8 limit','Indicator ID','Parent Code','Parent Name','Area Type','Sex','Age','Category Type', 'Category','Compared to subnational parent value or percentiles'],axis=1, inplace=True)
 
-#  Reduce columns for ease
-smokergm.drop(['Indicator Name','Indicator ID','Parent Code','Parent Name','Area Type','Sex','Age','Category Type', 'Category','Compared to subnational parent value or percentiles'],axis=1, inplace=True)
-smokergm.drop(['Area Code','Recent Trend'],axis=1, inplace=True)
-smokergm.drop(['Value note'],axis=1, inplace=True)
+#  Print a list of column headers
+print(gmsmoker.columns.tolist())  # eyeball check of column headers
 
-#  Eyeball check of column headers
-print(smokergm)
-print(smokergm.columns.tolist())
+#  Stack of longitudinal data
+pivot = gmsmoker.pivot(index = 'Area Name', columns = 'Time period')
+print(pivot)
 
 #  Rotate stacked data to give separate colums for each date
 smokergmpivot = smokergm.pivot(columns= "Time period")
 print(smokergmpivot)
 
+#  Line plot
+gmsmoker.plot.line(['Area Name','Value'])
+# PLots the % of LBW by ward.  Looks a mess.
+bar = gmsmoker['Value'].plot(kind='bar')
 
-print(smokergmpivot.columns.tolist())
-
-smokergmpivot.plot()
-
-plt.plot(smokergm['Value'])
-plt.show()
+gmsmoker.plot.line([])
 
 
-?plt.plot
+for borough in gm:
+    tempData = gmsmoker[gmsmoker['Area Name'] == borough]
+    print(tempData)
+    matplotlib.pyplot.line()
+matplotlib.pyplot.show()
+    
+
+
+
 
 """
+CODE THAT IS UNUSED OR NOT WORKING
 melted = pd.melt(smokergm,id_vars=['Time period','Value'])
 print(melted)
 print(melted.columns.tolist())
-
-smokergm = df.loc[smoker['Area Name'].isin(gm)]  #select gm LAs only into a df
-print(smokergm)
-print(type(smokergm))
-
-
-
-
-df = pd.DataFrame({'IndicatorID':data[:,0],
-                       'Area':data[:,5]})
-
-
-print(df)
-help(pd)
-
-
-
-
-
-
-
-with open('Pregnancyandbirth.data.csv','rb') as f:
-    reader = csv.reader(f, quoting=csv.QUOTE_NONNUMERIC, delimiter = ',')
-
-
-
-with open('Pregnancyandbirth.data.csv') as f:
-    reader = csv.reader(f, quoting=csv.QUOTE_NONNUMERIC, delimiter = ',')
-    for row in reader:
-            rowlist = []
-            for value in row:
-                rowlist.append(value)
-            data.append(rowlist)
-#f.close()
-
-for row in reader:
-    print (row)
-    
-    for row in readCSV:
-        print(row[0])
-with open('Pregnancyandbirth.data.csv') as csvfile:
-    readCSV = csv.reader(csvfile, delimiter=',')
