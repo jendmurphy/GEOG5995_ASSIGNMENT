@@ -11,11 +11,13 @@ released by Public Health England.
 import csv
 import random
 import numpy as np
+import matplotlib.pyplot as plt
 
 """
-import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
+import matplotlib as plt
+import numpy as np
 
 #  Set up a list of all local authorities in the Greater Manchester Health partnership
 gm = ['Bolton','Bury','Manchester','Oldham','Rochdale','Salford',
@@ -64,6 +66,17 @@ gmsmokerlbwconcat['Area Name'] = gmsmokerlbwconcat.index
 #  Plot using Seaborn package
 sns.pairplot(x_vars=['Smokervalue'], y_vars=['LBWvalue'], data = gmsmokerlbwconcat, hue='Area Name', size=8)
 
+# Calculate mean and standard deviation using numpy
+mean_smk = np.mean(gmsmokerlbwconcat['Smokervalue'])
+st_dev_smk = np.std(gmsmokerlbwconcat['Smokervalue'])
+mean_lbw = np.mean(gmsmokerlbwconcat['LBWvalue'])
+st_dev_lbw = np.mean(gmsmokerlbwconcat['LBWvalue'])
+
+print(mean_smk)
+print(st_dev_smk)
+print(mean_lbw)
+print(st_dev_lbw)
+
 #  Write manipulated data to a new Excel file
 writer = pd.ExcelWriter('/Users/JenMurphy/Documents/UNIVERSITY/PHE Data/python_gm_borough_output.xlsx')
 gmsmokerpivot.to_excel(writer,'gmsmokerpivot')
@@ -72,7 +85,6 @@ gmlbwpivot.to_excel(writer,'gmlbwpivot')
 gmlbw.to_excel(writer,'gmlbw')
 gmsmokerlbw.to_excel(writer,'gmsmokerlbw')
 gmsmokerlbwconcat.to_excel(writer,'gmsmokerlbwconcat')
-gm.to_excel(writer,'Local Authorities')
 writer.save()
 
 
