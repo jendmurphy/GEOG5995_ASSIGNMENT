@@ -70,7 +70,7 @@ sns.pairplot(x_vars=['Smokervalue'], y_vars=['LBWvalue'], data = gmsmokerlbwconc
 mean_smk = np.mean(gmsmokerlbwconcat['Smokervalue'])
 st_dev_smk = np.std(gmsmokerlbwconcat['Smokervalue'])
 mean_lbw = np.mean(gmsmokerlbwconcat['LBWvalue'])
-st_dev_lbw = np.mean(gmsmokerlbwconcat['LBWvalue'])
+st_dev_lbw = np.std(gmsmokerlbwconcat['LBWvalue'])
 
 print(mean_smk)
 print(st_dev_smk)
