@@ -22,6 +22,7 @@ import numpy as np
 #  Set up a list of all local authorities in the Greater Manchester Health partnership
 gm = ['Bolton','Bury','Manchester','Oldham','Rochdale','Salford',
           'Stockport','Tameside','Trafford','Wigan']
+england = ['England']
 
 #  Read csv file into a panda dataframe
 childhealthprofiledata = pd.io.parsers.read_csv("/Users/JenMurphy/Documents/UNIVERSITY/PHE Data/Child health profile/Pregnancyandbirth.data.csv")
@@ -87,9 +88,6 @@ gmsmokerlbw.to_excel(writer,'gmsmokerlbw')
 gmsmokerlbwconcat.to_excel(writer,'gmsmokerlbwconcat')
 writer.save()
 
-
-
-'''
 #  Plot all data points as a scatter plot.  Each year of data, for each broough is represented as a distinct point.
 def scatterplot(x_data, y_data, x_label, y_label, title):
 
@@ -106,30 +104,33 @@ def scatterplot(x_data, y_data, x_label, y_label, title):
     ax.set_ylabel(y_label)
 
 # Call the function to create plot
-scatterplot(x_data = gmsmoker['Value']
-            , y_data = gmlbw['Value']
+scatterplot(x_data = gmsmoker['Smokervalue']
+            , y_data = gmlbw['LBWvalue']
             , x_label = '% of Mothers reported as smokers at the time of delivery'
             , y_label = '% of all babies with a weight under 2500g'
             , title = 'Low Birthweight babies by Maternal Smoker Status, 2010-2015')
 
 
+
+
+
+
+
+
+'''
+ensmoker = smoker.loc[smoker['Area Name'].isin(england)]
+enlbw = lbw.loc[lbw['Area Name'].isin(england)]
+
 #  Join data frames together  THIS ISNT WORKING CORRECTLY YET.  NEED TO MAKE DATES MATCH
 gmsmokerlbwjoin = gmsmoker.join(gmlbw, lsuffix = '_smoker', rsuffix='_lbw')
-
-gmsmokerlbwconcat = pd.concat([df2, df1[['date', 'hour']]], axis=1)
-print(df)
-
 gmsmokerlbwjoin = gmsmokerlbwjoin.reset_index(drop=True)
 
-?pd.DataFrame.join
 
-gmsmokerlbwjoin = pd.DataFrame.join(gmsmoker,gmlbw)
 
 gmsmokerlbwpivot = gmsmokerlbw.pivot(index = 'Area Name', columns = 'Indicator Name')
 
 #  Line plot
 gmsmoker.plot.line(['Area Name','Value'])
-
 
 # PLots the % of LBW by ward.  Looks a mess.
 bar = gmsmoker['Value'].plot(kind='bar')
@@ -143,7 +144,6 @@ for borough in gm:
     matplotlib.pyplot.line()
 matplotlib.pyplot.show()
     
-CODE THAT IS UNUSED OR NOT WORKING
 melted = pd.melt(smokergm,id_vars=['Time period','Value'])
 print(melted)
 print(melted.columns.tolist())
