@@ -16,11 +16,11 @@ def scatterplot(x,y,data,hue,size,scattertitle,fname2):
     plt.title(scattertitle)
     plt.savefig(fname2)
 
-def trendplot(data,group1,group2,group3,xlab,ylab,plottitle,fname):
+def trendplot(data,group1,xvar,yvar,xlab,ylab,plottitle,fname):
     # Plotting the trend in maternal smoker rates across differnt boroughs
     fig, ax = plt.subplots()
     for title, group in data.groupby(group1):
-        ax.plot(group[group2], group[group3], label = title)
+        ax.plot(group[xvar], group[yvar], label = title)
     
     plt.xlabel(xlab)
     plt.ylabel(ylab)
