@@ -15,9 +15,8 @@ Here's what it does:
 5.  Prints a list of column headers
 6.  Rename a column in each of the data frames
 7.  Sets index column for each data frame, and then concatenates two data frames, and copies the index to a new column
-8.  Produces a scatter plot of data and saves to a .png
+8.  Produces a scatter plot of data and saves to a .png  and a time series trend for each borough as a series of subplots, using the group function, saves plot to a pdf. by calling methods defined in a separate script Methods.py.
 9.  Calculates mean and standard deviation, and prints these values on screen
 10. Appends the two variables back together as a new data frame (one variable above the other)
 11. Pivots data for both dataframes to unstack longitudinal data
-12. Plots time series trend for each borough as a series of subplots, using the group function, saves plot to a pdf.
-13. Writes all of the manipulated data frames into a new excel file with each frame as a separate sheet so it can be sent to my supervisor who doesn't use python!
+12. Writes all of the manipulated data frames into a new excel file with each frame as a separate sheet so it can be sent to my supervisor who doesn't use python!
