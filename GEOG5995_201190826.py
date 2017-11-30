@@ -61,6 +61,7 @@ gmsmokerlbwconcat['Area Name'] = gmsmokerlbwconcat.index
 
 #  Plot using Seaborn package, save figure as a pdf.
 scatter1 = sns.pairplot(x_vars=['Smokervalue'], y_vars=['LBWvalue'], data = gmsmokerlbwconcat, hue='Area Name', size=8)
+plt.title("LBW by smoker %")
 scatter1.savefig("LBW by smoker.png") # save seaborn scatterplot
 
 # Calculate mean and standard deviation using numpy
