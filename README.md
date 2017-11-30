@@ -1,6 +1,6 @@
 # GEOG5995 - Python without the hand holding!  [15 credits]
 
-After a week of teaching with Andy Evans, we were set the task of writing some code of our very own.  The code mus - read in a file, do something with it, give some kind of output, and write that output to some kind of new file.
+After a week of teaching with Andy Evans, we were set the task of writing some code of our very own.  The code must read in a file, do something with it, give some kind of output, and write that output to some kind of new file.
 
 Simple eh?  Not so, for the python newbies.
 
