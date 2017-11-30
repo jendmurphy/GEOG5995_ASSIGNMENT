@@ -13,6 +13,7 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import numpy as np
+import Methods
 
 #  Set up a list of all local authorities in the Greater Manchester Health partnership
 gm = ['Bolton','Bury','Manchester','Oldham','Rochdale','Salford',
@@ -59,10 +60,16 @@ gmsmokerlbwconcat = pd.concat([gmsmoker['Smokervalue'], gmlbw[['LBWvalue','Time 
 #  Copy index to an additional column
 gmsmokerlbwconcat['Area Name'] = gmsmokerlbwconcat.index
 
-#  Plot using Seaborn package, save figure as a pdf.
-scatter1 = sns.pairplot(x_vars=['Smokervalue'], y_vars=['LBWvalue'], data = gmsmokerlbwconcat, hue='Area Name', size=8)
-plt.title("LBW by smoker %")
-scatter1.savefig("LBW by smoker.png") # save seaborn scatterplot
+
+
+#  Call plot functions
+trendplot(gmsmokerlbwconcat,gmsmokerlbwconcat.index,'Time period','Smokervalue','Year',
+          '% of maternal smokers','Trend in maternal smoker rates',
+          'Trend in maternal smoker rates.pdf')
+
+scatterplot("Smokervalue","LBWvalue",gmsmokerlbwconcat,"Area Name", 8, 
+            "Correlation between Smoking and LBW","Correlation.png")
+
 
 # Calculate mean and standard deviation using numpy
 mean_smk = np.mean(gmsmokerlbwconcat['Smokervalue'])
@@ -74,18 +81,6 @@ print(mean_smk)
 print(st_dev_smk)
 print(mean_lbw)
 print(st_dev_lbw)
-
-# Plotting the trend in maternal smoker rates across differnt boroughs
-fig, ax = plt.subplots()
-for title, group in gmsmokerlbwconcat.groupby('Area Name'):
-    ax.plot(group['Time period'], group['Smokervalue'], label = title)
-
-plt.xlabel("Year")
-plt.ylabel("% of maternal smokers at delivery")
-plt.title("Trend in maternal smoker rates")
-plt.legend(loc=1)
-fname='Trend in maternal smoker rates.pdf'
-plt.savefig(fname)
 
 #  Write manipulated data to a new Excel file for my supervisor who doesn't use Python
 writer = pd.ExcelWriter('python_gm_borough_output.xlsx')

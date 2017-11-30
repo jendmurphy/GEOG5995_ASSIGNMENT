@@ -10,12 +10,11 @@ Visualisation methods for GEOG5995 script
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-def scatterplot(x,y,data,hue,size,title,filename):    
+def scatterplot(x,y,data,hue,size,scattertitle,fname2):    
     #  Plot using Seaborn package, save figure as a pdf.
-    sns.pairplot(x_vars=x, y_vars=y, data = data, hue=hue, size=size)
-    plt.title(title)
-    plt.savefig(filename)
-
+    sns.pairplot(x_vars=[x], y_vars=[y], data = data, hue=hue, size=size)
+    plt.title(scattertitle)
+    plt.savefig(fname2)
 
 def trendplot(data,group1,group2,group3,xlab,ylab,plottitle,fname):
     # Plotting the trend in maternal smoker rates across differnt boroughs
@@ -28,3 +27,6 @@ def trendplot(data,group1,group2,group3,xlab,ylab,plottitle,fname):
     plt.title(plottitle)
     plt.legend(loc=1)
     plt.savefig(fname)
+    
+
+
