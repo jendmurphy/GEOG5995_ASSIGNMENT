@@ -1,33 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Tue Nov 28 15:16:11 2017
-
-@author: JenMurphy
-"""
-
-# -*- coding: utf-8 -*-
-"""
 Jen Murphy
-27 October 2017
+30 November 2017
 
 GEOG 50995:  ASSIGNMENT
 
-A script to reveal interesting statistics using publicly available datasets
+A script to reveal interesting statistics and visualise trends using publicly available datasets
 released by Public Health England.
-
-Ella - I got SEABORN to produce a nice scatterplot, but I cant seem to work out a 
-way to save this plot outside of python.
-
-I want to plot a time series of smoker rates, with a differnet line for each borough.  
-When I try to do a group_by function, I get 10 plots, rather than 10 lines on one plot.  
-It is frustrating to say the least.
-
-Any help or tips gratefully recieved!  This whole thing is driving me potty.  
-I havent even tried to do anything like a regression yet.
-
-The first chunk of code just faffs about with with the dataframe to get the bits I want.
-
 """
 import pandas as pd
 import seaborn as sns
@@ -94,16 +74,6 @@ print(st_dev_smk)
 print(mean_lbw)
 print(st_dev_lbw)
 
-#  Write manipulated data to a new Excel file
-writer = pd.ExcelWriter('python_gm_borough_output.xlsx')
-gmsmokerpivot.to_excel(writer,'gmsmokerpivot')
-gmsmoker.to_excel(writer,'gmsmoker')
-gmlbwpivot.to_excel(writer,'gmlbwpivot')
-gmlbw.to_excel(writer,'gmlbw')
-gmsmokerlbw.to_excel(writer,'gmsmokerlbw')
-gmsmokerlbwconcat.to_excel(writer,'gmsmokerlbwconcat')
-writer.save()
-
 # Plotting the trend in maternal smoker rates across differnt boroughs
 fig, ax = plt.subplots()
 for title, group in gmsmokerlbwconcat.groupby('Area Name'):
@@ -116,63 +86,14 @@ plt.legend(loc=1)
 fname='Trend in maternal smoker rates.pdf'
 plt.savefig(fname)
 
-'''
-#  More stuff
-x = gmsmokerlbwconcat['Smokervalue']
-y = gmsmokerlbwconcat['LBWvalue'], 
-labels = gmsmokerlbwconcat['Area Name'] # or set in gm
-
-for key,grp in gmsmokerlbwconcat.groupby('Area Name'):
-    plt.plot(grp.Smokervalue,grp.LBWvalue,'o',label = key)
-plt.legend(loc = 'best')
-
-
-x = time
-y = smoker rates
-borough lines
-
-#THIS IS NOT AS GOOD A GRAPH AS THE SEABORN ONE
-#  Plot all data points as a scatter plot.  Each year of data, for each broough is represented as a distinct point.
-def scatterplot(x_data, y_data, x_label, y_label, title):
-
-    # Create the plot object
-    _, ax = plt.subplots()
-
-    # Plot the data, set the size (s), color and transparency (alpha)
-    # of the points
-    ax.scatter(x_data, y_data, s = 30, color = '#539caf', alpha = 0.75),
-
-    # Label the axes and provide a title
-    ax.set_title(title)
-    ax.set_xlabel(x_label)
-    ax.set_ylabel(y_label)
-
-# Call the function to create plot
-scatterplot(x_data = gmsmoker['Smokervalue']
-            , y_data = gmlbw['LBWvalue']
-            , x_label = '% of Mothers reported as smokers at the time of delivery'
-            , y_label = '% of all babies with a weight under 2500g'
-            , title = 'Low Birthweight babies by Maternal Smoker Status, 2010-2015')
+#  Write manipulated data to a new Excel file for my supervisor who doesn't use Python
+writer = pd.ExcelWriter('python_gm_borough_output.xlsx')
+gmsmokerpivot.to_excel(writer,'gmsmokerpivot')
+gmsmoker.to_excel(writer,'gmsmoker')
+gmlbwpivot.to_excel(writer,'gmlbwpivot')
+gmlbw.to_excel(writer,'gmlbw')
+gmsmokerlbw.to_excel(writer,'gmsmokerlbw')
+gmsmokerlbwconcat.to_excel(writer,'gmsmokerlbwconcat')
+writer.save()
 
 
-
-#  LOOKS LIKE SEABORN BUT NO COLOUR CODING OR TITLE
-# Try to write some code that works for my data - this gives me similar to SEABORN but no colours for markers
-fig, ax = plt.subplots()
-for borough in gm:
-    ax.scatter(gmsmokerlbwconcat['Smokervalue'],gmsmokerlbwconcat['LBWvalue'], 
-               label = borough, alpha = 0.3)
-ax.legend()
-ax.grid(True)
-plt.show()
-
-#  This gives a set of 10 plots, seperately, not all correctly named and saves just one of them - I want 10 lines on one plot!
-fig = plt.figure()
-group.plot(x='Time period', y='Smokervalue', title=title)
-plt.legend()
-plt.xlabel("Year")
-plt.ylabel("% of maternal smokers at delivery")
-plt.title("Trend in maternal smoker rates")
-fname='test.pdf'
-plt.savefig(fname)
-'''
