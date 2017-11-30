@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 """
 import pandas as pd
 import seaborn as sns
-import matplotlib as plt
+import matplotlib.pyplot as plt
 import numpy as np
 
 #  Set up a list of all local authorities in the Greater Manchester Health partnership
@@ -65,7 +65,7 @@ gmsmokerlbwconcat = pd.concat([gmsmoker['Smokervalue'], gmlbw[['LBWvalue','Time 
 gmsmokerlbwconcat['Area Name'] = gmsmokerlbwconcat.index
 
 #  Plot using Seaborn package
-sns.pairplot(x_vars=['Smokervalue'], y_vars=['LBWvalue'], data = gmsmokerlbwconcat, hue='Area Name', size=8)
+scatter1 = sns.pairplot(x_vars=['Smokervalue'], y_vars=['LBWvalue'], data = gmsmokerlbwconcat, hue='Area Name', size=8)
 
 # Calculate mean and standard deviation using numpy
 mean_smk = np.mean(gmsmokerlbwconcat['Smokervalue'])
@@ -88,31 +88,49 @@ gmsmokerlbw.to_excel(writer,'gmsmokerlbw')
 gmsmokerlbwconcat.to_excel(writer,'gmsmokerlbwconcat')
 writer.save()
 
+#THIS IS NOT AS GOOD A GRAPH AS THE SEABORN ONE
 #  Plot all data points as a scatter plot.  Each year of data, for each broough is represented as a distinct point.
-def scatterplot(x_data, y_data, x_label, y_label, title):
+    def scatterplot(x_data, y_data, x_label, y_label, title):
+    
+        # Create the plot object
+        _, ax = plt.subplots()
+    
+        # Plot the data, set the size (s), color and transparency (alpha)
+        # of the points
+        ax.scatter(x_data, y_data, s = 30, color = '#539caf', alpha = 0.75)
+    
+        # Label the axes and provide a title
+        ax.set_title(title)
+        ax.set_xlabel(x_label)
+        ax.set_ylabel(y_label)
+    
+    # Call the function to create plot
+    scatterplot(x_data = gmsmoker['Smokervalue']
+                , y_data = gmlbw['LBWvalue']
+                , x_label = '% of Mothers reported as smokers at the time of delivery'
+                , y_label = '% of all babies with a weight under 2500g'
+                , title = 'Low Birthweight babies by Maternal Smoker Status, 2010-2015')
 
-    # Create the plot object
-    _, ax = plt.subplots()
+#  LOOKS LIKE SEABORN BUT NO COLOUR CODING OR TITLE
+# Try to write some code that works for my data - this gives me similar to SEABORN but no colours for markers
+    fig, ax = plt.subplots()
+    for borough in gm:
+        ax.scatter(gmsmokerlbwconcat['Smokervalue'],gmsmokerlbwconcat['LBWvalue'], 
+                   label = borough, alpha = 0.3)
+    ax.legend()
+    ax.grid(True)
+    plt.show()
 
-    # Plot the data, set the size (s), color and transparency (alpha)
-    # of the points
-    ax.scatter(x_data, y_data, s = 30, color = '#539caf', alpha = 0.75)
-
-    # Label the axes and provide a title
-    ax.set_title(title)
-    ax.set_xlabel(x_label)
-    ax.set_ylabel(y_label)
-
-# Call the function to create plot
-scatterplot(x_data = gmsmoker['Smokervalue']
-            , y_data = gmlbw['LBWvalue']
-            , x_label = '% of Mothers reported as smokers at the time of delivery'
-            , y_label = '% of all babies with a weight under 2500g'
-            , title = 'Low Birthweight babies by Maternal Smoker Status, 2010-2015')
-
-
-
-
+#  This gives a set of 10 plots, seperately, not all correctly named
+    fig = plt.figure()
+    for title, group in df.groupby('Area Name'):
+        group.plot(x='Time period', y='Smokervalue', title=title)
+    plt.legend()
+    plt.xlabel("Year")
+    plt.ylabel("% of maternal smokers at delivery")
+    plt.title("Trend in maternal smoker rates")
+    fname='test.pdf'
+    plt.savefig(fname)
 
 
 
