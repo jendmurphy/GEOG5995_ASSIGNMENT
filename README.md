@@ -1,4 +1,4 @@
-# GEOG5995 - Python without the hand holding!  [15 credits]
+# GEOG5995 - Python without the hand holding  [15 credits]
 
 After a week of teaching with Andy Evans, we were set the task of writing some code of our very own.  The code must read in a file, do something with it, give some kind of output, and write that output to some kind of new file.
 
@@ -20,3 +20,5 @@ Here's what it does:
 10. Appends the two variables back together as a new data frame (one variable above the other)
 11. Pivots data for both dataframes to unstack longitudinal data
 12. Writes all of the manipulated data frames into a new excel file with each frame as a separate sheet so it can be sent to my supervisor who doesn't use python!
+
+See the pdf document in the repository above for some basic UML to describe the methods defined within the module Methods.py and to define the variables contained within dataframes and how these dataframes inherit variables from each other.
